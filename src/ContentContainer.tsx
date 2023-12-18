@@ -1,20 +1,12 @@
-import { useMemo } from "react";
 import { Name } from "./App";
 import DisplayContainer from "./DisplayContainer";
 import FormContainer from "./FormContainer";
-import primeFactorize from "./utils";
 
-
-const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: "first" | "last", newName: string) => void }) => {
-
-  const numOfFactors = useMemo(() => {
-    return primeFactorize(100000000000000000).length
-  }, []) 
-  
+const ContentContainer = ({name, handleNameUpdate, num}: { name: Name, handleNameUpdate:(field: "first" | "last", newName: string) => void, num: number }) => {
 
   return (
     <div className="container">
-      <h5>{`Important Number: ${numOfFactors}`}</h5>
+      <h5>Important Number: {num}</h5>
       <FormContainer handleNameUpdate={handleNameUpdate} name={name} />
       <DisplayContainer name={name} />
     </div>
