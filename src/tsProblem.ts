@@ -85,3 +85,29 @@ const homePageItems = [
     ]
   }
 ]
+
+export const TransformedData = (
+  item: RecipeDocument | ArticleDocument | EpisodeDocument
+): FavoritableItem => {
+  if ('servings' in item) {
+    const { id, documentName, imageUrlId, author } = item as RecipeDocument;
+    return { id, documentName, imageId: imageUrlId, authors: [author] };
+  }
+
+  if ('subHeadline' in item) {
+    const { id, documentName, publicImageId, author } = item as ArticleDocument;
+    const authors = author.map(a => a.author);
+    return { id, documentName, imageId: publicImageId, authors };
+  }
+
+  if ('meta' in item) {
+    const { id, documentName, thumbnail, meta } = item as EpisodeDocument;
+    return { id, documentName, imageId: thumbnail.url, authors: [meta.showName] };
+  }
+
+  return {} as FavoritableItem;
+};
+
+const transformedItems: Array<FavoritableItem> = homePageItems.map(TransformedData);
+
+console.log(transformedItems);
