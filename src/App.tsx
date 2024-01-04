@@ -1,37 +1,20 @@
-import { useEffect, useState } from "react";
 import ContentContainer from "./ContentContainer";
-import { getTrending } from "./api";
+import RecipeContainer from "./RecipeContainer";
 
-export type Name = {first: string, last: string}
+import primeFactorize from "./utils";
+import { useMemo } from "react";
 
 function App() {
-  const [name, setName] = useState({
-    first: "",
-    last: "",
-  });
-  const [trendingRecipes, setTrendingRecipes] = useState()
-
-  const handleNameUpdate=(field: keyof typeof name, newName: string) => {
-    setName((prevState) => {
-      prevState[field] = newName
-      return prevState
-    })
-  }
-
-  useEffect(() => {
-    const fetchTrending = async () => {
-      const trending = await getTrending()
-      setTrendingRecipes(trending)
-    } 
-    fetchTrending()
-   }, [])
+  const numOfFactors =useMemo(() => {
+    // This takes a long time to run
+    return primeFactorize(100000000000000000).length
+  },[])
 
   return (
       <div className="container">
         <h5>App</h5>
-        <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
-        {/* Render a component here that displays the title and userRatingsCount (IF there is an associated rating object on the returned data) of the
-        first item coming back from the fetchTrending function in the useEffect */}
+        <ContentContainer numOfFactors={numOfFactors}/>
+        <RecipeContainer />
       </div>
  
   );

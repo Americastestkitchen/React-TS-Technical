@@ -1,24 +1,33 @@
-import { Name } from "./App";
 import DisplayContainer from "./DisplayContainer";
 import FormContainer from "./FormContainer";
-import primeFactorize from "./utils";
+import { useState, useCallback } from "react";
 
+interface ContentContainerProps {
+  numOfFactors: number;
+}
 
-const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: "first" | "last", newName: string) => void }) => {
+const ContentContainer: React.FC<ContentContainerProps> = ({numOfFactors}) => {
+  const [name, setName] = useState({
+    first: "",
+    last: "",
+  })
 
-  const numOfFactors =() => {
-    // This takes a long time to run
-    return primeFactorize(100000000000000000).length
-  }
-  
+  const handleNameUpdate=useCallback((field: keyof typeof name, newName: string) => {
+    setName((prevState) => {
+      return {
+        ...prevState,
+        [field]: newName
+      }
+    })
+  },[])  
 
   return (
-    <div className="container">
-      <h5>{`Important Number: ${numOfFactors()}`}</h5>
+    <section className="container">
+      <h5>{`Important Number: ${numOfFactors}`}</h5>
       <FormContainer handleNameUpdate={handleNameUpdate} name={name} />
       <DisplayContainer name={name} />
-    </div>
-  );
-};
+    </section>
+  )
+}
 
 export default ContentContainer

@@ -1,14 +1,19 @@
 import TextInput from './TextInput';
-import { Name } from './App';
+import { Name } from "../types";
 
-const FormContainer = ({handleNameUpdate, name}: {handleNameUpdate:(field: "first" | "last", newName: string) => void, name: Name }) => {
+interface FormContainerProps {
+  handleNameUpdate: (field: "first" | "last", newName: string) => void;
+  name: Name;
+}
+
+const FormContainer: React.FC<FormContainerProps> = ({ handleNameUpdate, name }) => {
   return (
     <div className="container">
       <h5>FormContainer</h5>
       <TextInput value="first" handleNameUpdate={handleNameUpdate} name={name.first} />
-      <TextInput value="last" handleNameUpdate={handleNameUpdate} name={name.last}  />
+      <TextInput value="last" handleNameUpdate={handleNameUpdate} name={name.last} />
     </div>
   );
 }
 
-export default FormContainer
+export default FormContainer;
