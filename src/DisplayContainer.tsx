@@ -1,6 +1,6 @@
 import { memo } from "react";
 import Display from "./Display";
-import { Name } from "./App";
+import { Name } from "../types"
 
 const DisplayContainer = ({name}: {name: Name}) => {
 
@@ -10,8 +10,8 @@ const DisplayContainer = ({name}: {name: Name}) => {
       <Display value="first name" name={`${name.first}`}  />
       <Display value="last name" name={`${name.last}`} />
     </div>
-  );
+  )
 }
 
 
-export default DisplayContainer
+export default memo(DisplayContainer)
