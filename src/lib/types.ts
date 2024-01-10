@@ -16,4 +16,21 @@ export type FormData = {
   handleChange: HandleChange,
 }
 
-export type DisplayField = { label: string, value: string }
+export type DisplayField = { label: string, value: string | number }
+
+export interface Trending {
+  document_id: number;
+  count: number;
+  document_type: string;
+  title: string;
+  rating: Rating;
+}
+
+type Rating = {
+  attributes: {
+    avgScore: number | undefined;
+    rateableId: number | undefined;
+    rateableType: string | undefined;
+    userRatingsCount: number | undefined;
+  }
+}

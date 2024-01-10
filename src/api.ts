@@ -1,34 +1,19 @@
-// Can we consolidate this typing?
-interface Trending  {
-  document_id: number;
-  count: number;
-  document_type: string;
-  title: string;
-  rating: IncompleteRating | CompleteRating
-}
+import { Trending } from "./lib/types";
 
-type IncompleteRating = {
-  attributes: {
-    avgScore: number | undefined;
-    rateableId: number | undefined;
-    rateableType: string | undefined;
-    userRatingsCount: number | undefined;
+export const getTrending = async (): Promise<Trending[] | undefined> => {
+  try {
+    const response = await fetch(
+      "https://speak-easy-staging.herokuapp.com/api/analytics/trending/atk",
+    );
+    if (!response.ok) {
+      throw new Error(
+        "Some error has occurred while fetching TrendingRecipes",
+      );
+    }
+    const trending = await response.json();
+    return trending;
+  } catch (err) {
+    console.error(err);
   }
-}
-
-type CompleteRating = {
-  attributes: {
-    avgScore: number;
-    rateableId: number;
-    rateableType: string;
-    userRatingsCount: number;
-  }
-}
-
-
-export const getTrending = async (): Promise<Trending> => {
-  const response = await fetch('https://speak-easy-staging.herokuapp.com/api/analytics/trending/atk')
-  const trending = await response.json()
-  return trending
-
-}
+  return;
+};

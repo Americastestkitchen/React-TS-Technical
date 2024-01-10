@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import ContentContainer from "./ContentContainer";
 import { getTrending } from "./api";
-import { FormData, HandleChange, HandleNameUpdate } from "./lib/types";
-
-
+import { FormData, HandleChange, HandleNameUpdate, Name, Trending, DisplayField } from "./lib/types";
+import ContentContainer from "./ContentContainer";
 
 function App() {
-  const [name, setName] = useState({
+  const [name, setName] = useState<Name>({
     first: "",
     last: "",
   });
-  const [trendingRecipes, setTrendingRecipes] = useState()
+  const [loading, setLoading] = useState<boolean>(false);
+  const [trendingRecipes, setTrendingRecipes] = useState<Trending[] | undefined>([])
 
   const handleNameUpdate: HandleNameUpdate = (field, newName) => {
     setName((prevState) => {
@@ -20,14 +19,6 @@ function App() {
       }
     })
   }
-
-  useEffect(() => {
-    const fetchTrending = async () => {
-      const trending = await getTrending()
-      setTrendingRecipes(trending)
-    }
-    fetchTrending()
-  }, [])
 
   const formData: FormData[] = [
     {
@@ -42,14 +33,41 @@ function App() {
     }
   ]
 
+  const parseRecipeData = () => {
+    if (trendingRecipes && trendingRecipes.length) {
+      const recipeData: DisplayField[] = [
+        {
+          label: "Title",
+          value: trendingRecipes[0].title,
+        },
+        {
+          label: "Number of User Ratings",
+          value: trendingRecipes[0].rating?.attributes?.userRatingsCount || 0
+        }
+      ]
+      return recipeData;
+    }
+    return [];
+  }
+
+  useEffect(() => {
+    const fetchTrending = async () => {
+      setLoading(true);
+      const response = await getTrending();
+      setTrendingRecipes(response);
+      setLoading(false);
+    }
+    fetchTrending();
+  }, [])
+
   return (
     <div className="container">
       <h5>App</h5>
-      <ContentContainer formData={formData} />
-      {/* Render a component here that displays the title and userRatingsCount (IF there is an associated rating object on the returned data) of the
-        first item coming back from the fetchTrending function in the useEffect */}
+      <ContentContainer
+        content={{ formData, recipeData: parseRecipeData() }}
+        loading={loading}
+      />
     </div>
-
   );
 }
 

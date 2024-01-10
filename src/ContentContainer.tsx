@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
-import { FormData } from "./lib/types";
+import { FormData, DisplayField } from "./lib/types";
 import DisplayContainer from "./DisplayContainer";
 import FormContainer from "./FormContainer";
-import primeFactorize from "./utils";
 
-
-const ContentContainer = ({ formData }: { formData: FormData[] }) => {
+const ContentContainer = ({ content, loading }: {
+  content: { formData: FormData[], recipeData: DisplayField[] },
+  loading: boolean,
+}) => {
+  const { formData, recipeData } = content;
   const [importantNumber, setImportantNumber] = useState("")
-  const displayFields = formData.map(({ field, value }: { field: string, value: string }) => ({ label: field, value }))
+  
+  const displayFields = formData.map(({ field, value }) => ({ label: `${field} name`, value }));
 
   useEffect(() => {
     const worker = new Worker("./primeWorker.js")
@@ -20,12 +23,23 @@ const ContentContainer = ({ formData }: { formData: FormData[] }) => {
     return () => worker.terminate();
   }, [formData])
 
+  const getTitle = () => {
+    if (!loading && !recipeData.length) {
+      return "Something is wrong... :("
+    }
+    return loading ? " LOADING... " : "Recipe Display Container";
+  }
+
 
   return (
     <div className="container">
       <h5>{`Important Number: ${importantNumber}`}</h5>
       <FormContainer fields={formData} />
-      <DisplayContainer fields={displayFields} />
+      <DisplayContainer title="Form Display Container" fields={displayFields} />
+      <DisplayContainer
+        title={getTitle()}
+        fields={loading ? [] : recipeData}
+      />
     </div>
   );
 };
