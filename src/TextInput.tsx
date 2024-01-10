@@ -1,10 +1,12 @@
-const TextInput = ({ value, handleNameUpdate, name }: { name: string, value: string, handleNameUpdate:(field: "first" | "last", newName: string) => void } ) => {
+import { TextInputType } from "./lib/types";
+
+const TextInput = ({ field, handleChange, value }: TextInputType) => {
   return (
     <div className="field">
-      {`${value}: `}
+      {`${field}: `}
       <input
-        value={name}
-        onChange={(e) => handleNameUpdate(value, e.target.value)}
+        value={value}
+        onChange={(e) => handleChange(field, e.target.value)}
       />
     </div>
   );

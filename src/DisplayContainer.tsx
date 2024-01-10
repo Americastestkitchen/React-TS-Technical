@@ -1,14 +1,16 @@
 import { memo } from "react";
 import Display from "./Display";
-import { Name } from "./App";
+import { Name, DisplayField } from "./lib/types";
 
-const DisplayContainer = ({name}: {name: Name}) => {
+const DisplayContainer = ({ fields }: { fields: DisplayField[] }) => {
 
   return (
     <div className="container">
       <h5>DisplayContainer</h5>
-      <Display value="first name" name={`${name.first}`}  />
-      <Display value="last name" name={`${name.last}`} />
+      {fields.map(({ label, value }) => (
+        <Display key={label} label={`${label} name`} value={value} />
+      )
+      )}
     </div>
   );
 }

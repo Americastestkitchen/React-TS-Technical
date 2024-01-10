@@ -1,22 +1,31 @@
-import { Name } from "./App";
+import { useState, useEffect } from "react";
+import { FormData } from "./lib/types";
 import DisplayContainer from "./DisplayContainer";
 import FormContainer from "./FormContainer";
 import primeFactorize from "./utils";
 
 
-const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: "first" | "last", newName: string) => void }) => {
+const ContentContainer = ({ formData }: { formData: FormData[] }) => {
+  const [importantNumber, setImportantNumber] = useState("")
+  const displayFields = formData.map(({ field, value }: { field: string, value: string }) => ({ label: field, value }))
 
-  const numOfFactors =() => {
-    // This takes a long time to run
-    return primeFactorize(100000000000000000).length
-  }
-  
+  useEffect(() => {
+    const worker = new Worker("./primeWorker.js")
+    worker.onmessage = (e) => {
+      console.log(e.data)
+      setImportantNumber(e.data);
+    }
+
+    worker.postMessage(null);
+    return () => worker.terminate();
+  }, [formData])
+
 
   return (
     <div className="container">
-      <h5>{`Important Number: ${numOfFactors()}`}</h5>
-      <FormContainer handleNameUpdate={handleNameUpdate} name={name} />
-      <DisplayContainer name={name} />
+      <h5>{`Important Number: ${importantNumber}`}</h5>
+      <FormContainer fields={formData} />
+      <DisplayContainer fields={displayFields} />
     </div>
   );
 };

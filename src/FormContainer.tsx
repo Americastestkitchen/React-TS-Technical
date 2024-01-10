@@ -1,12 +1,13 @@
 import TextInput from './TextInput';
-import { Name } from './App';
+import { FormData } from './lib/types';
 
-const FormContainer = ({handleNameUpdate, name}: {handleNameUpdate:(field: "first" | "last", newName: string) => void, name: Name }) => {
+const FormContainer = ({ fields }: { fields: FormData[] }) => {
   return (
     <div className="container">
       <h5>FormContainer</h5>
-      <TextInput value="first" handleNameUpdate={handleNameUpdate} name={name.first} />
-      <TextInput value="last" handleNameUpdate={handleNameUpdate} name={name.last}  />
+      {fields.map(({field, value, handleChange}) => (
+        <TextInput key={field} field={field} value={value} handleChange={handleChange} />
+      ))}
     </div>
   );
 }

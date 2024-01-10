@@ -1,8 +1,11 @@
-const Display = ({ value, name }: { value: string, name: string}) => {
+import { DisplayField } from "./lib/types";
+
+
+const Display = ({ label, value }: DisplayField) => {
 
   return (
     <div className="value">
-      {value}: {name}
+      {label}: {value}
     </div>
   );
 };

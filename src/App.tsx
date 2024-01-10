@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ContentContainer from "./ContentContainer";
 import { getTrending } from "./api";
+import { FormData, HandleChange, HandleNameUpdate } from "./lib/types";
 
-export type Name = {first: string, last: string}
+
 
 function App() {
   const [name, setName] = useState({
@@ -11,10 +12,12 @@ function App() {
   });
   const [trendingRecipes, setTrendingRecipes] = useState()
 
-  const handleNameUpdate=(field: keyof typeof name, newName: string) => {
+  const handleNameUpdate: HandleNameUpdate = (field, newName) => {
     setName((prevState) => {
-      prevState[field] = newName
-      return prevState
+      return {
+        ...prevState,
+        [field]: newName
+      }
     })
   }
 
@@ -22,18 +25,31 @@ function App() {
     const fetchTrending = async () => {
       const trending = await getTrending()
       setTrendingRecipes(trending)
-    } 
+    }
     fetchTrending()
-   }, [])
+  }, [])
+
+  const formData: FormData[] = [
+    {
+      field: "first",
+      value: name.first,
+      handleChange: handleNameUpdate as HandleChange,
+    },
+    {
+      field: "last",
+      value: name.last,
+      handleChange: handleNameUpdate as HandleChange,
+    }
+  ]
 
   return (
-      <div className="container">
-        <h5>App</h5>
-        <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
-        {/* Render a component here that displays the title and userRatingsCount (IF there is an associated rating object on the returned data) of the
+    <div className="container">
+      <h5>App</h5>
+      <ContentContainer formData={formData} />
+      {/* Render a component here that displays the title and userRatingsCount (IF there is an associated rating object on the returned data) of the
         first item coming back from the fetchTrending function in the useEffect */}
-      </div>
- 
+    </div>
+
   );
 }
 
