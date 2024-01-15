@@ -1,8 +1,15 @@
-export type Name = { first: string, last: string }
+import { Dispatch, SetStateAction } from "react";
 
-export type HandleChange = (field: string, value: string) => void
+export type User = { name: string, email: string }
 
-export type HandleNameUpdate = (field: "first" | "last", newName: string) => void
+export type AppState = {
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+  trendingRecipes: TrendingRecipe[];
+  setTrendingRecipes: Dispatch<SetStateAction<TrendingRecipe[]>>;
+}
+
+export type HandleChange = () => void
 
 export type TextInputType = {
   value: string,
@@ -11,26 +18,27 @@ export type TextInputType = {
 }
 
 export type FormData = {
-  value: string,
   field: string,
+  value: string,
   handleChange: HandleChange,
 }
 
 export type DisplayField = { label: string, value: string | number }
 
-export interface Trending {
+export interface TrendingRecipe {
   document_id: number;
   count: number;
   document_type: string;
   title: string;
   rating: Rating;
+  ratedByUser?: number; // property added on the frontend to enable user input per recipe
 }
 
-type Rating = {
+export type Rating = {
   attributes: {
-    avgScore: number | undefined;
-    rateableId: number | undefined;
-    rateableType: string | undefined;
-    userRatingsCount: number | undefined;
+    avgScore?: number;
+    rateableId?: number;
+    rateableType?: string;
+    userRatingsCount?: number;
   }
 }

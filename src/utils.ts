@@ -10,9 +10,9 @@ function isPrime(n: number) {
   return true;
 }
 
-export default function primeFactorize(n: bigint) {
+export default function primeFactorize(n: number) {
   const start = performance.now()
-  const numbers = Array.from({ length: 1000000 }, (_, index) => index);
+  const numbers = Array.from({ length: n }, (_, index) => index);
   const primes = numbers.filter(num => isPrime(num))
   const end = performance.now()
   console.log(`calc for Important number took ${end - start}ms to run`)

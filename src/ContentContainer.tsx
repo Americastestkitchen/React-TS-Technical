@@ -1,45 +1,92 @@
-import { useState, useEffect } from "react";
-import { FormData, DisplayField } from "./lib/types";
+import { useState, useEffect, useMemo, useContext } from "react";
+import { FormData, DisplayField, HandleChange } from "./lib/types";
+import { getTrendingRecipes } from "./api";
+import primeFactorize from "./utils";
+import Form from "./Form";
 import DisplayContainer from "./DisplayContainer";
-import FormContainer from "./FormContainer";
+import starStyle from "./star.module.css";
 
-const ContentContainer = ({ content, loading }: {
-  content: { formData: FormData[], recipeData: DisplayField[] },
-  loading: boolean,
-}) => {
-  const { formData, recipeData } = content;
-  const [importantNumber, setImportantNumber] = useState("")
-  
-  const displayFields = formData.map(({ field, value }) => ({ label: `${field} name`, value }));
+import AppContext from "./context/AppContext";
+import Star from "./Star";
+import TrendingRecipes from "./TrendingRecipes";
+
+const ContentContainer = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { user, setUser, trendingRecipes, setTrendingRecipes } = useContext(AppContext);
+
+  const importantNumber = useMemo(() => primeFactorize(1000000).length, [])
 
   useEffect(() => {
-    const worker = new Worker("./primeWorker.js")
-    worker.onmessage = (e) => {
-      console.log(e.data)
-      setImportantNumber(e.data);
+    const fetchTrending = async () => {
+      setLoading(true);
+      const response = await getTrendingRecipes();
+
+      setTrendingRecipes(response);
+      setLoading(false);
     }
 
-    worker.postMessage(null);
-    return () => worker.terminate();
-  }, [formData])
-
-  const getTitle = () => {
-    if (!loading && !recipeData.length) {
-      return "Something is wrong... :("
+    if (!trendingRecipes.length) {
+      fetchTrending();
     }
-    return loading ? " LOADING... " : "Recipe Display Container";
+  }, [setTrendingRecipes, trendingRecipes.length])
+
+  const handleNameUpdate: HandleChange = (field, value) => {
+    setUser({ ...user, [field]: value })
   }
 
+  // const getTitle = () => {
+  //   if (!loading && !parseRecipeData().length) {
+  //     return "Something is wrong... :("
+  //   }
+  //   return loading ? " LOADING... " : "Recipe Display Container";
+  // }
+
+  // const parseRecipeData = () => {
+  //   if (trendingRecipes && trendingRecipes.length) {
+  //     const recipeData: DisplayField[] = [
+  //       {
+  //         label: "Title",
+  //         value: trendingRecipes[0].title,
+  //       },
+  //       {
+  //         label: "Number of User Ratings",
+  //         value: trendingRecipes[0].rating?.attributes?.userRatingsCount || 0
+  //       }
+  //     ]
+  //     return recipeData;
+  //   }
+  //   return [];
+  // }
+
+  const formFields: FormData[] = [
+    {
+      field: "Name",
+      value: user.name,
+      handleChange: handleNameUpdate,
+    },
+    {
+      field: "Email",
+      value: user.email,
+      handleChange: handleNameUpdate,
+    },
+  ]
+
+  const displayFields: DisplayField[] = formFields.map(({ field, value }) => ({
+    value,
+    label: `${field} Name`,
+  }));
 
   return (
     <div className="container">
-      <h5>{`Important Number: ${importantNumber}`}</h5>
-      <FormContainer fields={formData} />
-      <DisplayContainer title="Form Display Container" fields={displayFields} />
-      <DisplayContainer
+      <Form title="Check In" fields={formFields} />
+      <TrendingRecipes />
+      <h5>{`Total Recipes and counting: ${importantNumber}`}</h5>
+      {/* <DisplayContainer title="Form Display Container" fields={displayFields} /> */}
+      {/* <DisplayContainer
         title={getTitle()}
-        fields={loading ? [] : recipeData}
-      />
+        fields={loading ? [] : parseRecipeData()}
+      /> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { TextInputType } from "./lib/types";
 
-const TextInput = ({ field, handleChange, value }: TextInputType) => {
+const TextInput = ({ field, value, handleChange }: TextInputType) => {
   return (
     <div className="field">
       {`${field}: `}

@@ -1,6 +1,6 @@
-import { Trending } from "./lib/types";
+import { TrendingRecipe } from "./lib/types";
 
-export const getTrending = async (): Promise<Trending[] | undefined> => {
+export const getTrendingRecipes = async (): Promise<TrendingRecipe[]> => {
   try {
     const response = await fetch(
       "https://speak-easy-staging.herokuapp.com/api/analytics/trending/atk",
@@ -11,9 +11,9 @@ export const getTrending = async (): Promise<Trending[] | undefined> => {
       );
     }
     const trending = await response.json();
-    return trending;
+    return trending.map((recipe: TrendingRecipe) => ({ ...recipe, ratedByUser: 0 }));
   } catch (err) {
     console.error(err);
   }
-  return;
+  return [];
 };
