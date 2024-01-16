@@ -10,6 +10,11 @@ export default function Header() {
   const [showValidation, setShowValidation] = useState<boolean>(false);
 
   const handleClick = () => {
+    // This is not true authentication/authorization, but rather just storing a cookie in the browser to track current user
+    // This handler will take care of various cases:
+    //  // 1. Sign In action when user is not signed in
+    //  // 2. Show the name input field when it's hidden and user is not signed in
+    //  // 3. Sign Out action when user is signed in
     if (!fieldIsVisible && cookies.user) {
       setName("");
       setCookie("user", "");
