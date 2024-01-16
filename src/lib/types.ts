@@ -9,6 +9,19 @@ export type AppState = {
   setTrendingRecipes: Dispatch<SetStateAction<TrendingRecipe[]>>;
 }
 
+export type HoveredStar = {
+  rowId: number;
+  idx: number;
+};
+
+export type HandleSetRatingProps = (recipe: TrendingRecipe, recipeIndex: number, stars: number) => void
+
+export type RecipeCardProps = {
+  recipe: TrendingRecipe,
+  recipeIndex: number,
+  handleSetRating: HandleSetRatingProps
+}
+
 export type HandleChange = () => void
 
 export type TextInputType = {

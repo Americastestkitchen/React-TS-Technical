@@ -1,3 +1,14 @@
+.recipeCard {
+  position: relative;
+}
+
+.starWrapper {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-10px);
+}
+
 .star {
   width: 30px;
   padding: 0 0.1rem;
@@ -14,4 +25,8 @@
 
 .disabledStar {
   cursor: default;
+}
+
+.userCount { 
+  font-size: 0.75rem;
 }
