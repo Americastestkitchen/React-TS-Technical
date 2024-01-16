@@ -20,10 +20,10 @@ export default function TrendingRecipes() {
       //    // the shape of the API response changes
       //    // the document_id on the recipes changes
       //    // the response returns more than 4 recipes
-      8125: "src/assets/chocolate-crinkle-cookies.jpg",
-      15809: "src/assets/mushroom-burger.jpeg",
-      9067: "src/assets/scallion-pancakes.jpeg",
-      9305: "src/assets/easy-pound-cake.jpg",
+      8125: "chocolate-crinkle-cookies.jpg",
+      15809: "mushroom-burger.jpeg",
+      9067: "scallion-pancakes.jpeg",
+      9305: "easy-pound-cake.jpg",
     }
 
     const fetchTrendingRecipes = async () => {
