@@ -1,14 +1,27 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 380px 380px;
+  row-gap: 40px;
+  column-gap: 40px;
+}
 .recipeCard {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(255 255 255);
 }
-
+.title {
+  font-family: AridaBlack;
+  font-size: 1.25rem;
+  margin: 0;
+}
+.ratingWrapper {
+  padding: 1rem 0;
+}
 .starWrapper {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-10px);
+  padding-bottom: 0.5rem;
 }
-
 .star {
   width: 30px;
   padding: 0 0.1rem;
@@ -16,17 +29,27 @@
   stroke: #00000080;
   transition: 0.1s all ease-in;
 }
-
 .filledStar {
   fill: gold;
   stroke: #000000;
   transition: 0.2s all ease-in-out;
 }
-
 .disabledStar {
   cursor: default;
 }
-
 .userCount { 
   font-size: 0.75rem;
+}
+.imgWrapper {
+  width: inherit;
+}
+.img {
+  object-fit: cover;
+}
+
+@media screen and (max-width: 393px) {
+  .wrapper {
+    grid-template-columns: 380px;
+    row-gap: 40px;
+  }
 }

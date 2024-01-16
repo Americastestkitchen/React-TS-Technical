@@ -1,0 +1,122 @@
+.header {
+  position: fixed;
+  z-index: 1;
+  background: rgb(255 255 255);
+  height: 100px;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.maxWidth {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  width: 800px;
+}
+.logoTitleGroup {
+  display: flex;
+  align-items: center;
+}
+.title {
+  font-family: AridaBlack;
+  font-size: 1rem;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+.logoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(215 57 20);
+  color: rgb(255 255 255);
+  width: 160px;
+  height: 60px;
+  font-family: Oswald;
+}
+.logoDashes {
+  width: 24px;
+  height: 1px;
+  background: rgb(255 255 255) 
+}
+.logoTopRow {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.logoSmallText {
+  font-size: 0.8rem;
+  font-family: OswaldLight;
+  padding: 0 6px
+}
+.logoTallText {
+  font-size: 1.5rem;
+  font-family: Oswald;
+  margin-top: -6px;
+}
+.inputLoginGroup {
+  position: relative;
+  overflow: hidden;
+  height: 32px;
+  border: 1px solid rgb(84 82 80);
+  border-radius: 25px;
+  transition: 0.2s width ease-in;
+}
+.loginWithField {
+  width: 380px;
+
+}
+.loginButtonOnly {
+  width: 88px;
+}
+.login {
+  position: absolute;
+  right: 0;
+  background: rgb(255 255 255);
+  height: 32px;
+  width: 88px;
+  padding: 8px 16px;
+  border: none;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.login:hover {
+  background: #444444;
+  color: white
+}
+.redPlaceholder::placeholder {
+  color: red;
+}
+.input {
+  position: absolute;
+  right: 100;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  border: none;
+  height: 24px;
+  width: 260px;
+  padding: 4px 16px;
+}
+
+@media screen and (max-width: 393px) {
+  .header {
+    position: fixed;
+    width: 393px;
+    height: 140px;
+  }
+  .maxWidth {
+    flex-direction: column;
+    width: 393px;
+  }
+  .logoTitleGroup {
+    flex-direction: column;
+  }
+  
+
+}

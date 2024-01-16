@@ -1,16 +1,20 @@
+import { useCookies } from "react-cookie";
 import { useState } from "react";
-import { TrendingRecipe, HoveredStar, RecipeCardProps } from "../../lib/types";
+import { HoveredStar, RecipeCardProps, RecipeCookie } from "../../lib/types";
 import Star from "./Star";
 
 import styles from "./styles.module.css"
 
 export default function RecipeCard({ recipe, recipeIndex, handleSetRating }: RecipeCardProps) {
+  const [cookies] = useCookies(["user"]);
   const [hoveredStar, setHoveredStar] = useState<HoveredStar>({ rowId: -1, idx: -1 });
 
-  const handleStarStyles = (recipe: TrendingRecipe, starIndex: number) => {
+  const handleStarStyles = (recipe: RecipeCookie, starIndex: number) => {
     const baseStyle = styles.star;
 
-    const starsBelongToCurrRecipe = recipe.document_id === hoveredStar.rowId;
+    if (!cookies.user) return baseStyle + ' ' + styles.disabledStar;
+
+    const starsBelongToCurrRecipe = recipe.documentId === hoveredStar.rowId;
     const starIsHovered = starIndex <= hoveredStar.idx;
 
     // if star is not a part of user rating
@@ -27,16 +31,24 @@ export default function RecipeCard({ recipe, recipeIndex, handleSetRating }: Rec
     return baseStyle;
   };
 
+
   return (
-    <section className={`${styles.recipeCard} container`}>
-      <h4>{recipe.title}</h4>
-      <span>Average Rating: {recipe.rating.attributes?.avgScore}</span>
-      <span className={styles.userCount}> ({recipe?.rating?.attributes?.userRatingsCount} users)</span>
+    <section className={styles.recipeCard}>
+      {recipe.img &&
+        <div className={styles.imgWrapper}>
+          <img src={recipe.img} alt={recipe.title} width="380px" height="380px" className={styles.img} />
+        </div>
+      }
+      <h4 className={styles.title}>{recipe.title}</h4>
+      <div className={styles.ratingWrapper}>
+        <span>Rating: {recipe.avgScore}</span>
+        <span className={styles.userCount}> ({recipe.userRatingsCount} users)</span>
+      </div>
       <div className={styles.starWrapper}>
         {Array.from({ length: 5 }).map((_, idx) => (
           <Star
             key={`star-${idx}`}
-            onMouseEnter={() => setHoveredStar({ rowId: recipe.document_id, idx })}
+            onMouseEnter={() => setHoveredStar({ rowId: recipe.documentId, idx })}
             onMouseLeave={() => setHoveredStar({ rowId: -1, idx: -1 })}
             onClick={() => handleSetRating(recipe, recipeIndex, idx + 1)}
             className={handleStarStyles(recipe, idx)}

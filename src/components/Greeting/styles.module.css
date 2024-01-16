@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  width: 800px;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  padding-top: 100px;
+}
+.instructions {
+  font-size: 1.15rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-family: OswaldLight;
+  
+}
+.userGreeting {
+  font-family: AridaBlack;
+  font-size: 1.75rem;
+  margin: 0;
+}
+.inputLabel {
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 1px 0;
+}
+
+@media screen and (max-width: 393px) {
+  .wrapper {
+    width: 393px;
+    padding-top: 140px;
+  }
+  .userGreeting {
+    margin-left: 1rem;
+  }
+  .instructions {
+    margin-top: -0.75rem;
+    padding-left: 0.75rem;
+    width: 393px;
+  }
+}

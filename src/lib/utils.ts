@@ -1,4 +1,4 @@
-import { TrendingRecipe } from './lib/types';
+import { RecipeCookie } from './types';
 
 function isPrime(n: number): boolean {
   if (n <= 1) {
@@ -26,23 +26,16 @@ function getNewAverage(currCount: number, prevAvg: number, newScore: number) {
   return Math.round((totalStars / (currCount + 1)) * 100) / 100;
 }
 
-export function updateRating(recipe: TrendingRecipe, stars: number) {
-  let { userRatingsCount, avgScore } = recipe.rating.attributes;
+export function updateRating(recipe: RecipeCookie, stars: number) {
+  let { userRatingsCount, avgScore } = recipe;
 
   userRatingsCount = userRatingsCount || 0;
   avgScore = avgScore || 0;
 
-  const attributes = {
-    ...recipe.rating.attributes,
-    userRatingsCount: userRatingsCount + 1,
-    avgScore: getNewAverage(userRatingsCount, avgScore, stars),
-  };
-
-  const rating = { ...recipe.rating, attributes };
-
   return {
     ...recipe,
-    rating,
+    userRatingsCount: userRatingsCount + 1,
+    avgScore: getNewAverage(userRatingsCount, avgScore, stars),
     ratedByUser: stars,
   };
 }

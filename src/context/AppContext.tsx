@@ -4,7 +4,7 @@ import { AppState } from "../lib/types";
 const INITIAL_APP_STATE = {
   user: {
     name: "",
-    email: "",
+    isSignedIn: false,
   },
   setUser: () => { },
   trendingRecipes: [],
