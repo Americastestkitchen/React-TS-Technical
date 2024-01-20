@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  width: 800px;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  position: relative;
+}
+.warning {
+  font-size: 1.15rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  background: rgb(215 57 20);
+  color: rgb(255 255 255);
+  font-weight: bold;
+}
+.instructions {
+  font-family: OswaldLight;
+  font-size: 1.15rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+.userGreeting {
+  font-family: AridaBlack;
+  font-size: 1.75rem;
+  margin: 0;
+}
+@media screen and (max-width: 400px) {
+  .wrapper {
+    width: 393px;
+  }
+  .userGreeting {
+    margin-left: 1rem;
+  }
+  .instructions {
+    margin-top: -0.75rem;
+    padding-left: 0.75rem;
+    width: 393px;
+  }
+  .warning {
+    position: fixed;
+    z-index: 1;
+    font-size: 1rem;
+  }
+}
