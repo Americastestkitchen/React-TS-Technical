@@ -36,7 +36,7 @@ export default function RecipeCard({ recipe, recipeIndex, handleSetRating }: Rec
     <section className={styles.recipeCard}>
       {recipe.img &&
         <div className={styles.imgWrapper}>
-          <img src={recipe.img} alt={recipe.title} width="380px" height="380px" className={styles.img} />
+          <img src={recipe.img} alt={recipe.title} className={styles.img} />
         </div>
       }
       <h4 className={styles.title}>{recipe.title}</h4>

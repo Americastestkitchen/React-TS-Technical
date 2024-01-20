@@ -44,12 +44,19 @@
   width: inherit;
 }
 .img {
+  height: 380px;
+  width: 380px;
   object-fit: cover;
 }
 
-@media screen and (max-width: 393px) {
+@media screen and (max-width: 400px) {
   .wrapper {
-    grid-template-columns: 380px;
+    grid-template-columns: 340px;
     row-gap: 40px;
+    justify-content: center;
+  }
+  .img {
+    height: 340px;
+    width: 340px;
   }
 }

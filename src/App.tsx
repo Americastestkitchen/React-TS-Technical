@@ -5,9 +5,9 @@ import TrendingRecipes from './components/TrendingRecipes';
 
 function App() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div className="main-container">
       <Header />
-      <div style={{ padding: "100px 0" }}>
+      <div className="content-container">
         <Greeting />
         <TrendingRecipes />
       </div>

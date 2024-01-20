@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   height: 100px;
+  position: relative;
 }
 .warning {
   font-size: 1.15rem;
@@ -28,10 +29,9 @@
   font-size: 1.75rem;
   margin: 0;
 }
-@media screen and (max-width: 393px) {
+@media screen and (max-width: 400px) {
   .wrapper {
     width: 393px;
-    padding-top: 140px;
   }
   .userGreeting {
     margin-left: 1rem;
@@ -40,5 +40,10 @@
     margin-top: -0.75rem;
     padding-left: 0.75rem;
     width: 393px;
+  }
+  .warning {
+    position: fixed;
+    z-index: 1;
+    font-size: 1rem;
   }
 }
