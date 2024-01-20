@@ -1,0 +1,11 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  background: rgb(255 255 255);
+  padding: 20px 0;
+  width: 100%;
+  text-align: center;
+}
+.recipeCount {
+  font-weight: bold;
+}

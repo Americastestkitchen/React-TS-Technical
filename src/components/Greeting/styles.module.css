@@ -4,28 +4,30 @@
   justify-content: space-between;
   align-items: center;
   height: 100px;
-  padding-top: 100px;
 }
-.instructions {
+.warning {
   font-size: 1.15rem;
   margin: 0;
   width: 100%;
   text-align: center;
   padding: 10px 0;
+  background: rgb(215 57 20);
+  color: rgb(255 255 255);
+  font-weight: bold;
+}
+.instructions {
   font-family: OswaldLight;
-  
+  font-size: 1.15rem;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
 }
 .userGreeting {
   font-family: AridaBlack;
   font-size: 1.75rem;
   margin: 0;
 }
-.inputLabel {
-  font-size: 9px;
-  text-transform: uppercase;
-  padding: 1px 0;
-}
-
 @media screen and (max-width: 393px) {
   .wrapper {
     width: 393px;
