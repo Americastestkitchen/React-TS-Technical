@@ -1,5 +1,6 @@
 // Can we consolidate this typing?
 export interface Trending  {
+  map(arg0: (recipe: any) => any): import("react").ReactNode;
   document_id: number;
   count: number;
   document_type: string;

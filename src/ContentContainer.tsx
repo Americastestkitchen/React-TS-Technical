@@ -6,7 +6,7 @@ import primeFactorize from "./utils";
 export type Field = "first" | "last"
 
 
-const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: Field , newName: string) => void }) => {
+const ContentContainer = ({name, handleNameUpdate} : { name: Name, handleNameUpdate:(field: Field , newName: string) => void }) => {
 
   const numOfFactors =() => {
     // This takes a long time to run
