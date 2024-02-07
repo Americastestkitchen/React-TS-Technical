@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ContentContainer from "./ContentContainer";
 import { Trending, getTrending } from "./api";
 import { TrendingItems } from "./TrendingItems";
@@ -10,9 +10,11 @@ function App() {
     first: "",
     last: "",
   });
-  const [trendingRecipes, setTrendingRecipes] = useState<Trending>()
 
-  const handleNameUpdate=(field: keyof typeof name, newName: string) => {
+  const [trendingRecipes, setTrendingRecipes] = useState<Trending>()
+  const memoizedName = useMemo(() => name, [name]);
+
+  const handleNameUpdate=(field: keyof typeof memoizedName, newName: string) => {
     setName((prevState) => { 
       return {
         ...prevState, [field]: newName
@@ -21,11 +23,22 @@ function App() {
 
   useEffect(() => {
     const fetchTrending = async () => {
-      const trending = await getTrending()
-      setTrendingRecipes(trending)
-    } 
-    fetchTrending()
-   }, [])
+      try {
+        const trending = await getTrending();
+  
+        if (Array.isArray(trending) && trending.length > 0) {
+          setTrendingRecipes(trending);
+        } else {
+          console.error('Empty or Invalid');
+        }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+  
+    fetchTrending();
+  }, []);
+  
 
   return (
       <div className="container">
@@ -33,7 +46,6 @@ function App() {
         <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
         <TrendingItems trendingRecipes={trendingRecipes}/>
       </div>
- 
   );
 }
 
