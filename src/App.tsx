@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import ContentContainer from "./ContentContainer";
 import { Trending, getTrending } from "./api";
 import { TrendingItems } from "./TrendingItems";
@@ -12,9 +12,8 @@ function App() {
   });
 
   const [trendingRecipes, setTrendingRecipes] = useState<Trending>()
-  const memoizedName = useMemo(() => name, [name]);
 
-  const handleNameUpdate=(field: keyof typeof memoizedName, newName: string) => {
+  const handleNameUpdate = (field: "first" | "last", newName: string) => {
     setName((prevState) => { 
       return {
         ...prevState, [field]: newName
