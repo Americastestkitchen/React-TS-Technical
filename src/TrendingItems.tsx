@@ -21,9 +21,7 @@ export const TrendingItems: React.FC<TrendingItemsProps> = ({
             {trendingRecipes.map((recipe) => (
               <li key={recipe.id}>
                 <p>Title: {recipe.title}</p>
-                <p>
-                  User Ratings Count: {recipe.rating.attributes.userRatingsCount ?? 0}
-                </p>
+                <p>User Ratings Count: {recipe.rating.attributes.userRatingsCount ?? 0}</p>
               </li>
             ))}
           </ul>
