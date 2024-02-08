@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Name } from "./App";
 import DisplayContainer from "./DisplayContainer";
 import FormContainer from "./FormContainer";
@@ -6,13 +7,17 @@ import primeFactorize from "./utils";
 export type Field = "first" | "last"
 
 
-const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: Field , newName: string) => void }) => {
+const ContentContainer = ({ name, handleNameUpdate }: { name: Name, handleNameUpdate: (e: any, form: { first: string; last: string }) => void }) => {
 
-  const numOfFactors =() => {
+  const numOfFactors = () => {
     // This takes a long time to run
-    return primeFactorize().length
+    const primeNumbers = useMemo(() => {
+      return primeFactorize().length;
+    }, [])
+
+    return primeNumbers;
   }
-  
+
 
   return (
     <div className="container">
