@@ -33,7 +33,7 @@ function App() {
          Display the title and userRatingsCount (Default the userRatingsCount to 0 if the field is null or missing in the api response) 
          */}
       {trendingRecipes?.length ?
-        trendingRecipes.map((trending: Trending, idx: number) => {
+        trendingRecipes.map((trending: Trending) => {
           return <p key={trending.document_id}>Recipe: {trending.title} | User Rating: {trending.rating?.attributes.userRatingsCount ? trending.rating?.attributes.userRatingsCount : 0}</p>
         })
         : null
