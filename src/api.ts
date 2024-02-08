@@ -4,7 +4,6 @@ export interface Trending  {
   count: number;
   document_type: string;
   title: string;
-// change this to just Rating
   rating: Rating;
 }
 
@@ -23,10 +22,8 @@ type CompleteRating = {
   attributes: RatingAtt
 }
 
-//giving the value that belongs to either 
 type Rating = IncompleteRating | CompleteRating
 
-// not changed
 export const getTrending = async (): Promise<Trending> => {
   const response = await fetch('https://speak-easy-staging.herokuapp.com/api/analytics/trending/atk')
   const trending = await response.json()
