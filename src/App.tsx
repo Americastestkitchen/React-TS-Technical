@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ContentContainer from "./ContentContainer";
 import { Trending, getTrending } from "./api";
+import { TrendingItems } from "./TrendingItems";
 
 export type Name = {first: string, last: string}
 
@@ -9,32 +10,41 @@ function App() {
     first: "",
     last: "",
   });
+
   const [trendingRecipes, setTrendingRecipes] = useState<Trending>()
 
   const handleNameUpdate=(field: keyof typeof name, newName: string) => {
-    setName((prevState) => {
-      prevState[field] = newName
-      return prevState
-    })
-  }
+    setName((prevState) => { 
+      return {
+        ...prevState, [field]: newName
+    }
+  });}
 
   useEffect(() => {
     const fetchTrending = async () => {
-      const trending = await getTrending()
-      setTrendingRecipes(trending)
-    } 
-    fetchTrending()
-   }, [])
+      try {
+        const trending = await getTrending();
+  
+        if (Array.isArray(trending) && trending.length > 0) {
+          setTrendingRecipes(trending);
+        } else {
+          console.error('Empty or Invalid');
+        }
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+  
+    fetchTrending();
+  }, []);
+  
 
   return (
       <div className="container">
         <h5>App</h5>
         <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
-        {/* Render a component here that renders a list of trending items from the getTrending api function.
-         Display the title and userRatingsCount (Default the userRatingsCount to 0 if the field is null or missing in the api response) 
-         */}
+        <TrendingItems trendingRecipes={trendingRecipes}/>
       </div>
- 
   );
 }
 
