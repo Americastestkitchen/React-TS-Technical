@@ -22,8 +22,7 @@ export const TrendingItems: React.FC<TrendingItemsProps> = ({
               <li key={recipe.id}>
                 <p>Title: {recipe.title}</p>
                 <p>
-                  User Ratings Count:{" "}
-                  {recipe.rating.attributes.userRatingsCount}
+                  User Ratings Count: {recipe.rating.attributes.userRatingsCount ?? 0}
                 </p>
               </li>
             ))}
