@@ -13,7 +13,7 @@ function App() {
 
   const [trendingRecipes, setTrendingRecipes] = useState<Trending>()
 
-  const handleNameUpdate = (field: "first" | "last", newName: string) => {
+  const handleNameUpdate=(field: keyof typeof name, newName: string) => {
     setName((prevState) => { 
       return {
         ...prevState, [field]: newName
