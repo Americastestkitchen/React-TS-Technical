@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Name } from "./App";
 import DisplayContainer from "./DisplayContainer";
 import FormContainer from "./FormContainer";
@@ -8,11 +9,10 @@ export type Field = "first" | "last"
 
 const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: Field , newName: string) => void }) => {
 
-  const numOfFactors =() => {
-    // This takes a long time to run
+  const numOfFactors = () => {
+  // This takes a long time to run - useMemo function to fix?
     return primeFactorize().length
   }
-  
 
   return (
     <div className="container">
