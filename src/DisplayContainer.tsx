@@ -4,9 +4,9 @@ import { Name } from "./App";
 
 const DisplayContainer = ({name}: {name: Name}) => {
 
-  // set up useMemo function
   const firstName = useMemo(() => `${name.first}`, [name.first]);
   const lastName = useMemo(() => `${name.last}`, [name.last]);
+    // set up useMemo function, app still slow?
 
   return (
     <div className="container">

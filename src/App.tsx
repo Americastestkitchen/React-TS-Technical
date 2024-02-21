@@ -22,8 +22,6 @@ function App() {
       return {...prevState, [field] :newName};
             // still does not declare Form/DisplayContainer so this may be incorrect
     });
-    
-   
   }
 
   useEffect(() => {
@@ -54,6 +52,7 @@ function App() {
 
 export default App;
 
+// below are some notes I made before interview
 
 {/*           
           get items from getTrending api
