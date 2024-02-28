@@ -6,18 +6,19 @@ interface TrendingListProps {
 
 const TrendingList: React.FC<TrendingListProps> = ({ trendingRecipes }) => {
     return (
-        <div>
-            <ul>
-                {trendingRecipes.map((trendingRecipe) => {
-                    return(
+        <ul>
+            {trendingRecipes.map((trendingRecipe) => {
+                return(
                     <li key={trendingRecipe.document_id}>
-                        Title: {trendingRecipe.title}
-                        User Rating: {trendingRecipe.rating.attributes.userRatingsCount ?? 0}
-                    </li>)
-                })}
-            </ul>
-        </div>
+                        <p>Title: {trendingRecipe.title}</p>
+                        <p>User Rating: {trendingRecipe.rating.attributes.userRatingsCount ?? 0}</p>
+                    </li>
+                )
+            })}
+        </ul>
     )
 }
 
 export default TrendingList;
+
+//lint the code
