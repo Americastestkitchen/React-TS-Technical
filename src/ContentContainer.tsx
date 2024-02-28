@@ -10,7 +10,6 @@ export type Field = "first" | "last"
 const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: Field , newName: string) => void }) => {
 
   const numOfFactors = useMemo(() => {
-    // This takes a long time to run
     return primeFactorize().length
   }, [])
 

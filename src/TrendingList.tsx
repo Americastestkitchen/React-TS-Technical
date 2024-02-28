@@ -20,5 +20,3 @@ const TrendingList: React.FC<TrendingListProps> = ({ trendingRecipes }) => {
 }
 
 export default TrendingList;
-
-//lint the code
