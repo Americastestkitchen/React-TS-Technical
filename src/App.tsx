@@ -11,6 +11,7 @@ function App() {
     last: "",
   });
   const [trendingRecipes, setTrendingRecipes] = useState<Trending[]>()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleNameUpdate=(field: keyof typeof name, newName: string) => {
     setName(prevState => ({
@@ -21,8 +22,14 @@ function App() {
 
   useEffect(() => {
     const fetchTrending = async () => {
-      const trending = await getTrending()
-      setTrendingRecipes(trending)
+      try {
+        const trending = await getTrending()
+        setTrendingRecipes(trending)
+        setErrorMessage(null)
+      } catch (error) {
+        console.error('Error in fetching trending data: ', error)
+        setErrorMessage('Failed to fetch trending data')
+      }
     } 
     fetchTrending()
   }, [])
@@ -31,6 +38,7 @@ function App() {
       <div className="container">
         <h5>App</h5>
         <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
+        {errorMessage && <p>{errorMessage}</p>}
         {trendingRecipes && <TrendingList trendingRecipes={trendingRecipes}/>}
       </div>
 
