@@ -15,7 +15,7 @@ const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpda
 
   return (
     <div className="container">
-      <h5>{`Important Number: ${numOfFactors}`}</h5>
+      <h5>Important Number: {numOfFactors}</h5>
       <FormContainer handleNameUpdate={handleNameUpdate} name={name} />
       <DisplayContainer name={name} />
     </div>
