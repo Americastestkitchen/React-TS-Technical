@@ -7,7 +7,7 @@ import { useMemo } from "react";
 export type Field = "first" | "last"
 
 
-const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpdate:(field: Field , newName: string) => void }) => {
+const ContentContainer = ({name, handleNameUpdate, prevNameRef}: { name: Name, handleNameUpdate:(field: Field , newName: string) => void, prevNameRef: React.RefObject<Name> }) => {
 
   const numOfFactors = useMemo(() => {
     // This takes a long time to run
@@ -16,8 +16,8 @@ const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpda
 
   return (
     <div className="container">
-      <h5>{`Important Number: ${numOfFactors}`}</h5>
-      <FormContainer handleNameUpdate={handleNameUpdate} name={name} />
+      <h5>Important Number: ${numOfFactors}</h5>
+      <FormContainer handleNameUpdate={handleNameUpdate} name={name} prevNameRef={prevNameRef} />
       <DisplayContainer name={name} />
     </div>
   );

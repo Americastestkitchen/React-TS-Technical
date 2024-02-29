@@ -45,7 +45,7 @@ function App() {
   return (
       <div className="container">
         <h5>App</h5>
-        <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
+        <ContentContainer handleNameUpdate={handleNameUpdate} name={name} prevNameRef={prevNameRef}/>
         {errorMessage && <p>{errorMessage}</p>}
         {trendingRecipes && <TrendingList trendingRecipes={trendingRecipes}/>}
       </div>
