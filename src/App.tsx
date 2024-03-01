@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ContentContainer from "./ContentContainer";
 import { Trending, getTrending } from "./api";
+import TrendingList from "./TrendingList";
 
 export type Name = {first: string, last: string}
 
@@ -9,32 +10,46 @@ function App() {
     first: "",
     last: "",
   });
-  const [trendingRecipes, setTrendingRecipes] = useState<Trending>()
+  const [trendingRecipes, setTrendingRecipes] = useState<Trending[]>()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const prevNameRef = useRef<Name>({ first: "", last: ""})
 
   const handleNameUpdate=(field: keyof typeof name, newName: string) => {
-    setName((prevState) => {
-      prevState[field] = newName
-      return prevState
-    })
+    const isNewNameDifferent = newName !== prevNameRef.current[field]
+
+    if (isNewNameDifferent) {
+      setName(prevState => ({
+        ...prevState,
+        [field]: newName
+      }))
+
+      prevNameRef.current = {...prevNameRef.current, [field]: newName}
+    }
   }
 
   useEffect(() => {
     const fetchTrending = async () => {
-      const trending = await getTrending()
-      setTrendingRecipes(trending)
+      try {
+        const trending = await getTrending()
+        setTrendingRecipes(trending)
+        setErrorMessage(null)
+      } catch (error) {
+        console.error('Error in fetching trending data: ', error)
+        setErrorMessage('Failed to fetch trending data')
+      }
     } 
     fetchTrending()
-   }, [])
+  }, [])
 
   return (
       <div className="container">
         <h5>App</h5>
-        <ContentContainer handleNameUpdate={handleNameUpdate} name={name} />
-        {/* Render a component here that renders a list of trending items from the getTrending api function.
-         Display the title and userRatingsCount (Default the userRatingsCount to 0 if the field is null or missing in the api response) 
-         */}
+        <ContentContainer handleNameUpdate={handleNameUpdate} name={name} prevNameRef={prevNameRef}/>
+        {errorMessage && <p>{errorMessage}</p>}
+        {trendingRecipes && <TrendingList trendingRecipes={trendingRecipes}/>}
       </div>
- 
+
   );
 }
 
