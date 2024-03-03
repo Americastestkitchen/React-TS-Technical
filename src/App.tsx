@@ -13,16 +13,16 @@ function App() {
   });
   const [trendingRecipes, setTrendingRecipes] = useState<Trending []>()
 
-  const handleNameUpdate=(field: keyof typeof name, newName: string) => {
     // The form input is not updating can you explain why?- react state imutable
+  const handleNameUpdate=(field: keyof typeof name, newName: string) => {
     setName((prevState) => {
-      prevState[field] = newName
-      
-      //Change from--> return prevState
-      return {...prevState, [field] :newName};
-            // still does not declare Form/DisplayContainer so this may be incorrect
-    });
-  }
+      const newState = {...prevState, [field] : newName};    
+    return newState;
+  });
+ };
+      // prevState[field] = newName
+      // //Change from--> return prevState
+            // still does not declare Form/DisplayContainer so this may be incorrect  
 
   useEffect(() => {
     const fetchTrending = async () => {

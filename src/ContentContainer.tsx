@@ -13,7 +13,7 @@ const ContentContainer = ({name, handleNameUpdate}: { name: Name, handleNameUpda
   // This takes a long time to run
   // useMemo function to fix?- 
     return primeFactorize().length
-  }, [name]);
+  }, []);
 
   return (
     <div className="container">
